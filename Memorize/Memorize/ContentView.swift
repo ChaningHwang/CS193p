@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["🚲", "🚂", "✈️", "🚀", "🚗", "🚐", "🏎", "🚕", "🚌", "🛵", "🚝", "🛸", "🚁", "⛵️", "🛳", "🛶"]
     
-    @State var emojiCount = 4
+    @State var emojis = ["🚲", "🚂", "✈️", "🚀", "🚗", "🚐", "🏎", "🚕", "🚌", "🛵", "🚝", "🛸", "🚁", "⛵️", "🛳", "🛶"]
     
+    var animalTheme = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🦄", "🦉"]
+    
+    var foodTheme = ["🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🫐", "🍈"]
+    
+    @State var emojiCount = 16
+        
     var body: some View {
         VStack {
+            HStack{
+                Text("Memorize!").font(.largeTitle)
+            }
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
@@ -25,9 +33,11 @@ struct ContentView: View {
             .foregroundColor(.red)
             Spacer()
             HStack {
-                remove
+                changeToVehicleTheme
                 Spacer()
-                add
+                changeToAnimalTheme
+                Spacer()
+                changeToFoodTheme
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -35,25 +45,61 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    var remove: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
+    var changeToVehicleTheme: some View {
+        Button(action: {
+            emojis = ["🚲", "🚂", "✈️", "🚀", "🚗", "🚐", "🏎", "🚕", "🚌", "🛵", "🚝", "🛸", "🚁", "⛵️", "🛳", "🛶"]
+            emojiCount = 16
+        }) {
+            VStack{
+                Image(systemName: "car")
+                Text("vehicles").font(.system(size: 20))
             }
-        } label: {
-            Image(systemName: "minus.circle")
         }
     }
     
-    var add: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
+    var changeToAnimalTheme: some View {
+        Button(action: {
+            emojis = animalTheme
+            emojiCount = animalTheme.count
+        }) {
+            VStack{
+                Image(systemName: "heart")
+                Text("animals").font(.system(size: 20))
             }
-        } label: {
-            Image(systemName: "plus.circle")
         }
     }
+    
+    var changeToFoodTheme: some View {
+        Button(action: {
+            emojis = foodTheme
+            emojiCount = foodTheme.count
+        }) {
+            VStack{
+                Image(systemName: "person")
+                Text("food").font(.system(size: 20))
+            }
+        }
+    }
+    
+//    var remove: some View {
+//        Button {
+//            if emojiCount < emojis.count {
+//                emojiCount += 1
+//            }
+//        } label: {
+//            Image(systemName: "minus.circle")
+//        }
+//    }
+//
+//    var add: some View {
+//        Button {
+//            if emojiCount < emojis.count {
+//                emojiCount += 1
+//            }
+//        } label: {
+//            Image(systemName: "plus.circle")
+//        }
+//    }
 }
 
 struct CardView: View {
@@ -84,5 +130,6 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
     }
 }
